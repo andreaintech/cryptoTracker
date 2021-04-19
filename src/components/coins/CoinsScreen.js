@@ -1,23 +1,18 @@
-import React, { useEffect } from 'react'
-import { Text, View, Pressable, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import Http from '../../libs/http'
+import { useCoinsHook } from '../../hooks/useCoinsHook'
+import CoinsItem from './CoinsItem'
+import Colors from '../../res/colors'
 
 const CoinsScreen = () => {
     const navigation = useNavigation()
-
-    async function getCoins() {
-        const coins = await Http.instance.get('https://api.coinlore.net/api/tickers/')
-
-        console.log('coins: ', coins)
-    }
-
-    useEffect(() => {
-
-        getCoins()
-
-
-    })
+    const [
+        coins,
+        setCoins,
+        isLoading,
+        setIsLoading
+    ] = useCoinsHook(null)
 
     function handlePress() {
         console.log('go to detail')
@@ -26,10 +21,25 @@ const CoinsScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>Hello, world!</Text>
-            <Pressable style={styles.btn} onPress={handlePress}>
-                <Text style={styles.btnText}>Ir a detail</Text>
-            </Pressable>
+            {
+                isLoading ?
+                    <>
+                        <View style={[styles.container, styles.horizontal]}>
+                            <ActivityIndicator size="large" color="#6930c3" />
+                        </View>
+                    </>
+                    :
+                    (
+                        <>
+                            <FlatList
+                                data={coins}
+                                renderItem={({ item }) => (<CoinsItem item={item} />)}
+                                keyExtractor={(item) => item.id}
+                            />
+                        </>
+
+                    )
+            }
         </View>
     )
 }
@@ -37,10 +47,10 @@ const CoinsScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'red',
+        justifyContent: "center",
+        backgroundColor: Colors.charade
     },
     titleText: {
-        color: '#fff',
         textAlign: 'center'
     },
     btn: {
@@ -50,8 +60,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'blue'
     },
     btnText: {
-        color: '#fff',
         textAlign: 'center'
+    },
+    horizontal: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        padding: 10
     }
 })
 
