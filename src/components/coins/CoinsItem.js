@@ -1,8 +1,8 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, Platform } from 'react-native'
+import { View, Text, StyleSheet, Image, Platform, Pressable } from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 
-export default function CoinsItem({ item }) {
+export default function CoinsItem({ item, onPress }) {
 
     const getImageArrow = () => {
         if (item.percent_change_1h > 0) {
@@ -13,7 +13,7 @@ export default function CoinsItem({ item }) {
     }
 
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={onPress}>
             <View style={styles.row}>
                 <Text style={styles.symbolText}>{item.symbol}</Text>
                 <Text style={styles.nameText}>{item.name}</Text>
@@ -26,7 +26,7 @@ export default function CoinsItem({ item }) {
                     style={styles.imageArrow}
                 />
             </View>
-        </View>
+        </Pressable>
     )
 }
 
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
         padding: 16,
         borderBottomColor: Colors.zircon,
         borderBottomWidth: 1,
-        marginLeft: Platform.OS === 'ios' ? 16 : 0
+        marginLeft: Platform.OS === 'ios' ? 16 : 0,
+        paddingLeft: Platform.OS === 'ios' ? 0 : 16
     },
     row: {
         flexDirection: 'row'

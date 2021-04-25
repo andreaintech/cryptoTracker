@@ -14,9 +14,9 @@ const CoinsScreen = () => {
         setIsLoading
     ] = useCoinsHook(null)
 
-    function handlePress() {
+    function handlePress(coin) {
         console.log('go to detail')
-        navigation.navigate('CoinDetail')
+        navigation.navigate('CoinDetail', { coin })
     }
 
     return (
@@ -33,7 +33,12 @@ const CoinsScreen = () => {
                         <>
                             <FlatList
                                 data={coins}
-                                renderItem={({ item }) => (<CoinsItem item={item} />)}
+                                renderItem={({ item }) => (
+                                    <CoinsItem
+                                        item={item}
+                                        onPress={() => handlePress(item)}
+                                    />
+                                )}
                                 keyExtractor={(item) => item.id}
                             />
                         </>
