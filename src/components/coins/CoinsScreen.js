@@ -1,33 +1,17 @@
 import React from 'react'
-import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { View, StyleSheet, FlatList, ActivityIndicator, Text } from 'react-native'
 import { useCoinsHook } from '../../hooks/useCoinsHook'
 import CoinsItem from './CoinsItem'
 import CoinsSearch from './CoinsSearch'
 import Colors from '../../res/colors'
 
 const CoinsScreen = () => {
-    const navigation = useNavigation()
     const {
         coins,
-        setCoins,
         isLoading,
-        allCoins
-    } = useCoinsHook(null)
-
-    function handlePress(coin) {
-        console.log('go to detail')
-        navigation.navigate('CoinDetail', { coin })
-    }
-
-    const handleSearch = (query) => {
-        const coinsFiltered = allCoins.filter((coin) => {
-            return coin.name.toLowerCase().includes(query.toLowerCase()) ||
-                coin.symbol.toLowerCase().includes(query.toLowerCase())
-        })
-
-        setCoins(coinsFiltered)
-    }
+        handleSearch,
+        handlePress
+    } = useCoinsHook()
 
     return (
         <View style={styles.container}>
@@ -43,19 +27,23 @@ const CoinsScreen = () => {
                     </>
                     :
                     (
-                        <>
-                            <FlatList
-                                data={coins}
-                                renderItem={({ item }) => (
-                                    <CoinsItem
-                                        item={item}
-                                        onPress={() => handlePress(item)}
-                                    />
-                                )}
-                                keyExtractor={(item) => item.id}
-                            />
-                        </>
-
+                        coins.length ?
+                            <>
+                                <FlatList
+                                    data={coins}
+                                    renderItem={({ item }) => (
+                                        <CoinsItem
+                                            item={item}
+                                            onPress={() => handlePress(item)}
+                                        />
+                                    )}
+                                    keyExtractor={(item) => item.id}
+                                />
+                            </>
+                            :
+                            <View style={[styles.container, styles.horizontal]}>
+                                <Text style={styles.coinsNotFoundText}>No search results were found</Text>
+                            </View>
                     )
             }
         </View>
@@ -84,6 +72,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         padding: 10
+    },
+    coinsNotFoundText: {
+        color: Colors.white,
+        padding: 20
     }
 })
 
