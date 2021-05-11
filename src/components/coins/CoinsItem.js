@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, Platform, Pressable } from 'react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
+import Colors from '../../res/colors'
 
 export default function CoinsItem({ item, onPress }) {
 
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         padding: 16,
-        borderBottomColor: Colors.zircon,
+        // borderBottomColor: Colors.zircon,
+        borderBottomColor: Colors.white,
         borderBottomWidth: 1,
         marginLeft: Platform.OS === 'ios' ? 16 : 0,
         paddingLeft: Platform.OS === 'ios' ? 0 : 16

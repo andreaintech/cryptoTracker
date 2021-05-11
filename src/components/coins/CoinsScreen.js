@@ -1,26 +1,39 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useCoinsHook } from '../../hooks/useCoinsHook'
 import CoinsItem from './CoinsItem'
+import CoinsSearch from './CoinsSearch'
 import Colors from '../../res/colors'
 
 const CoinsScreen = () => {
     const navigation = useNavigation()
-    const [
+    const {
         coins,
         setCoins,
         isLoading,
-        setIsLoading
-    ] = useCoinsHook(null)
+        allCoins
+    } = useCoinsHook(null)
 
     function handlePress(coin) {
         console.log('go to detail')
         navigation.navigate('CoinDetail', { coin })
     }
 
+    const handleSearch = (query) => {
+        const coinsFiltered = allCoins.filter((coin) => {
+            return coin.name.toLowerCase().includes(query.toLowerCase()) ||
+                coin.symbol.toLowerCase().includes(query.toLowerCase())
+        })
+
+        setCoins(coinsFiltered)
+    }
+
     return (
         <View style={styles.container}>
+            <CoinsSearch
+                onChange={handleSearch}
+            />
             {
                 isLoading ?
                     <>

@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
     },
     containerItem: {
         backgroundColor: 'rgba(0,0,0,0.1)',
-        borderColor: Colors.zircon,
+        // borderColor: Colors.zircon,
+        borderColor: Colors.white,
         borderWidth: 1,
         padding: 16,
         marginRight: 8,
