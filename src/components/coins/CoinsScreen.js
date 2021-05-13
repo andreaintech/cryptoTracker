@@ -22,7 +22,7 @@ const CoinsScreen = () => {
                 isLoading ?
                     <>
                         <View style={[styles.container, styles.horizontal]}>
-                            <ActivityIndicator size="large" color="#6930c3" />
+                            <ActivityIndicator size="large" color={Colors.purple} />
                         </View>
                     </>
                     :
