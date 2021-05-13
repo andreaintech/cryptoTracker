@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet, FlatList, SectionList } from 'react-native'
+import { View, Text, Image, StyleSheet, FlatList, SectionList, Pressable } from 'react-native'
 import Http from '../../libs/http'
 import Colors from '../../res/colors'
 
@@ -66,6 +66,10 @@ export default function CoinDetailScreen(props) {
                     resizeMode="cover"
                 />
                 <Text style={styles.titleTex}>{coin.name}</Text>
+
+                <Pressable>
+                    <Text>Add to favorites</Text>
+                </Pressable>
             </View>
 
             <SectionList

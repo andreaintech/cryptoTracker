@@ -5,7 +5,9 @@ const colors = {
     white: '#fff',
     grey: '#fefefe',
     purple: '#6930c3',
-    purpleLight: '#b382ff'
+    purpleLight: '#b382ff',
+    picton: "#3c6fc8",
+    carmine: "#ef6372",
 }
 
 export default colors
