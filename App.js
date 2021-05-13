@@ -3,6 +3,7 @@ import { Image } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import CoinsStack from './src/components/coins/CoinsStack'
+import { Colors } from 'react-native/Libraries/NewAppScreen'
 
 const Tabs = createBottomTabNavigator()
 
@@ -10,7 +11,18 @@ const App = () => {
   return (
     <NavigationContainer>
 
-      <Tabs.Navigator>
+      <Tabs.Navigator
+        tabBarOptions={{
+          activeTintColor: Colors.grey,
+          inactiveTintColor: 'gray',
+          activeBackgroundColor: '#20252c',
+          inactiveBackgroundColor: '#20252c',
+          style: {
+            borderTopWidth: 2,
+            borderTopColor: '#888a8c'
+          },
+        }}
+      >
         <Tabs.Screen
           name='Coins'
           component={CoinsStack}
