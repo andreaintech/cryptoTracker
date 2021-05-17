@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Image, StyleSheet, FlatList, SectionList, Pressable } from 'react-native'
 import Http from '../../libs/http'
+import Storage from '../../libs/storage'
 import Colors from '../../res/colors'
 
 export default function CoinDetailScreen(props) {
     const [coin, setCoin] = useState(props.route.params.coin)
     const [markets, setMarkets] = useState([])
-    console.log('============= coin es: ', coin)
+    const [isFavorite, setIsFavorite] = useState(false)
 
     useEffect(() => {
         props.navigation.setOptions({ title: `${coin.symbol}   |   ${coin.name}` })
@@ -55,20 +56,59 @@ export default function CoinDetailScreen(props) {
         )
     }
 
+    const toggleFavorite = () => {
+        if (isFavorite) {
+            removeFromFavorites()
+        } else {
+            addToFavorites()
+        }
+    }
+
+    const addToFavorites = async () => {
+        const jsonCoin = JSON.stringify(coin)
+        const key = `favorite-${coin.id}`
+
+        const stored = await Storage.instance.store(key, jsonCoin)
+        if (stored) {
+            setIsFavorite(true)
+        }
+    }
+
+    const removeFromFavorites = () => {
+        const key = `favorite-${coin.id}`
+
+        Storage.instance.remove(key)
+            .then((response) => {
+                if (response) {
+                    setIsFavorite(false)
+                }
+            })
+            .catch((error) => {
+                console.log('[ERROR] CoinDetailScreen > addToFavorites: ', error)
+            })
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.subHeader}>
-                <Image
-                    source={{
-                        uri: getIconImage(coin.nameid),
-                    }}
-                    style={styles.iconImage}
-                    resizeMode="cover"
-                />
-                <Text style={styles.titleTex}>{coin.name}</Text>
+                <View style={styles.row}>
+                    <Image
+                        source={{
+                            uri: getIconImage(coin.nameid),
+                        }}
+                        style={styles.iconImage}
+                        resizeMode="cover"
+                    />
+                    <Text style={styles.titleTex}>{coin.name}</Text>
+                </View>
 
-                <Pressable>
-                    <Text>Add to favorites</Text>
+                <Pressable
+                    onPress={toggleFavorite}
+                    style={[
+                        styles.btnFavorite,
+                        isFavorite ? styles.btnRemoveFavorite : styles.btnAddFavorite
+                    ]}>
+                    <Text style={styles.btnFavoriteText}>{isFavorite ? 'Remove from favorites' : 'Add to favorites'}</Text>
                 </Pressable>
             </View>
 
@@ -106,6 +146,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.charade
     },
+    row: {
+        flexDirection: 'row'
+    },
     marketsTitle: {
         fontSize: 16,
         color: Colors.white,
@@ -136,7 +179,8 @@ const styles = StyleSheet.create({
     subHeader: {
         backgroundColor: 'rgba(0,0,0,0.1)',
         padding: 16,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     titleTex: {
         fontSize: 16,
@@ -168,5 +212,18 @@ const styles = StyleSheet.create({
         color: Colors.white,
         fontSize: 14,
         fontWeight: 'bold'
+    },
+    btnFavorite: {
+        padding: 8,
+        borderRadius: 8,
+    },
+    btnAddFavorite: {
+        backgroundColor: Colors.picton
+    },
+    btnRemoveFavorite: {
+        backgroundColor: Colors.carmine
+    },
+    btnFavoriteText: {
+        color: Colors.white
     }
 })

@@ -2,16 +2,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 class Storage {
 
-    static instance = Storage()
+    static instance = new Storage();
 
     store = async (key, value) => {
         try {
             let response = false
-            console.log('typeof value : ', typeof (value))
-            if (typeof (value) === String || typeof (value) === 'string') {
+            if (typeof (value) === 'string') {
                 await AsyncStorage.setItem(key, value)
                 response = true
             }
+
+            console.log('typeof response ', typeof (response))
 
             return response
         } catch (error) {
@@ -60,3 +61,5 @@ class Storage {
     }
 
 }
+
+export default Storage

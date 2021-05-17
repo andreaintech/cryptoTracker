@@ -27,7 +27,6 @@ export const useCoinsHook = () => {
                 coin.symbol.toLowerCase().includes(query.toLowerCase())
         })
 
-        console.log(' Coins filtered: ', coinsFiltered)
         setCoins(coinsFiltered)
     }
 
