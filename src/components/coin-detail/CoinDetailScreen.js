@@ -137,8 +137,6 @@ export default function CoinDetailScreen(props) {
                     <Text style={styles.titleTex}>{coin.name}</Text>
                 </View>
 
-
-
                 <Pressable
                     onPress={toggleFavorite}
                     style={[
