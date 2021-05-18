@@ -94,8 +94,8 @@ export default function CoinDetailScreen(props) {
             },
             {
                 text: 'Remove',
-                onPress: async () => {
-                    await remove()
+                onPress: () => {
+                    remove()
                 },
                 style: 'destructive',
             },
