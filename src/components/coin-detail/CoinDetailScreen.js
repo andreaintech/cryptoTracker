@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet, FlatList, SectionList, Pressable, Alert, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, Image, StyleSheet, FlatList, SectionList, Pressable, Alert, ActivityIndicator } from 'react-native'
 import Http from '../../libs/http'
 import Storage from '../../libs/storage'
 import Colors from '../../res/colors'
@@ -78,37 +78,29 @@ export default function CoinDetailScreen(props) {
         }
     }
 
-    const removeFromFavorites = async () => {
+    const remove = async () => {
         const key = `favorite-${coin.id}`
         await Storage.instance.remove(key)
 
         setIsFavorite(false)
     }
 
-    // const remove = async () => {
-
-    // }
-
-    // const removeFromFavorites = () => {
-    //     Alert.alert('Remove favorite', 'Are you sure?', [
-    //         {
-    //             text: 'Cancel',
-    //             onPress: () => { },
-    //             style: 'cancel',
-    //         },
-    //         {
-    //             text: 'Remove',
-    //             onPress: async () => {
-    //                 const key = `favorite-${this.state.coin.id}`
-    //                 const removed = await Storage.instance.remove(key)
-    //                 if (removed) {
-    //                     this.setState({ isFavorite: false })
-    //                 }
-    //             },
-    //             style: 'destructive',
-    //         },
-    //     ])
-    // }
+    const removeFromFavorites = () => {
+        Alert.alert('Remove favorite', 'Are you sure?', [
+            {
+                text: 'Cancel',
+                onPress: () => { },
+                style: 'cancel',
+            },
+            {
+                text: 'Remove',
+                onPress: async () => {
+                    await remove()
+                },
+                style: 'destructive',
+            },
+        ])
+    }
 
     const getIsFavorite = async () => {
         try {
