@@ -15,7 +15,7 @@ const App = () => {
       <Tabs.Navigator
         tabBarOptions={{
           activeTintColor: Colors.purpleLight,
-          inactiveTintColor: Colors.grey,
+          inactiveTintColor: Colors.gray,
           activeBackgroundColor: Colors.blackPearl,
           inactiveBackgroundColor: Colors.blackPearl,
           style: {
