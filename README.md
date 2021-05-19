@@ -5,3 +5,5 @@ My Platzi Profile: https://platzi.com/@adasilvapdev/
 
 My Platzi React Native Certificate: https://platzi.com/p/adasilvapdev/curso/2043-react-native/diploma/detalle/
 
+
+Updated and maintained with ❤️ by [@adasilvapdev](https://adasilvapdev.github.io/web/).
